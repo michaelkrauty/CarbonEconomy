@@ -47,7 +47,8 @@ public class SQL {
 
 	public synchronized static void closeConnection() {
 		try {
-			connection.close();
+			if (connection != null)
+				connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,12 +92,12 @@ public class SQL {
 		openConnection();
 		try {
 			checkUser(uuid);
-				PreparedStatement sql = connection
-						.prepareStatement("SELECT * FROM `" + table + "` WHERE player=?;");
-				sql.setString(1, uuid.toString());
-				ResultSet result = sql.executeQuery();
-				result.next();
-				return result.getDouble("balance");
+			PreparedStatement sql = connection
+					.prepareStatement("SELECT * FROM `" + table + "` WHERE player=?;");
+			sql.setString(1, uuid.toString());
+			ResultSet result = sql.executeQuery();
+			result.next();
+			return result.getDouble("balance");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
