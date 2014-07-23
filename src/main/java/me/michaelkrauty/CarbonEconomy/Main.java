@@ -22,11 +22,11 @@ public class Main extends JavaPlugin implements Listener {
 	public static SQL sql;
 
 	public void onEnable() {
+		if (!getDataFolder().exists())
+			getDataFolder().mkdir();
 		setupEconomy();
 		config = new Config(this);
 		sql = new SQL(config);
-		if (!getDataFolder().exists())
-			getDataFolder().mkdir();
 	}
 
 	public void onDisable() {
