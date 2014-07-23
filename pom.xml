@@ -33,7 +33,7 @@
     </dependencies>
 
     <build>
-        <finalName>Kettle</finalName>
+        <finalName>CarbonEconomy</finalName>
     </build>
 
 </project>
