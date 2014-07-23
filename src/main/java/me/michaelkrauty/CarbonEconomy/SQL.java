@@ -35,7 +35,7 @@ public class SQL {
 
 	private static Connection connection;
 
-	private synchronized static void openConnection() {
+	private static void openConnection() {
 		if (connection == null) {
 			try {
 				connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, user, pass);
@@ -45,7 +45,7 @@ public class SQL {
 		}
 	}
 
-	public synchronized static void closeConnection() {
+	public static void closeConnection() {
 		try {
 			if (connection != null)
 				connection.close();
@@ -54,7 +54,7 @@ public class SQL {
 		}
 	}
 
-	public synchronized static boolean checkTable() {
+	public static boolean checkTable() {
 		openConnection();
 		boolean res = true;
 		try {
@@ -67,7 +67,7 @@ public class SQL {
 		return res;
 	}
 
-	public synchronized static void checkUser(UUID uuid) {
+	public static void checkUser(UUID uuid) {
 		openConnection();
 		try {
 			PreparedStatement stmt = connection
@@ -88,7 +88,7 @@ public class SQL {
 		}
 	}
 
-	public synchronized static double getBalance(UUID uuid) {
+	public static double getBalance(UUID uuid) {
 		openConnection();
 		try {
 			checkUser(uuid);
@@ -104,7 +104,7 @@ public class SQL {
 		}
 	}
 
-	public synchronized static void setBalance(UUID uuid, double balance) {
+	public static void setBalance(UUID uuid, double balance) {
 		openConnection();
 		checkUser(uuid);
 		try {

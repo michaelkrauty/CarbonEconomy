@@ -9,6 +9,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.UUID;
+
 /**
  * Created on 7/22/2014.
  *
@@ -45,17 +47,26 @@ public class Main extends JavaPlugin implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		sql.setBalance(event.getPlayer().getUniqueId(), economy.getBalance(getServer().getOfflinePlayer(event.getPlayer().getUniqueId())));
+		final UUID uuid = event.getPlayer().getUniqueId();
+		getServer().getScheduler().scheduleAsyncDelayedTask(this, new Runnable() {
+			public void run() {
+				sql.setBalance(uuid, economy.getBalance(getServer().getOfflinePlayer(uuid)));
+			}
+		});
 	}
 
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent event) {
-		OfflinePlayer offlinePlayer = getServer().getOfflinePlayer(event.getPlayer().getUniqueId());
+		final OfflinePlayer offlinePlayer = getServer().getOfflinePlayer(event.getPlayer().getUniqueId());
 		double ecoBalance = economy.getBalance(offlinePlayer);
 		double sqlBalance = sql.getBalance(event.getPlayer().getUniqueId());
 		if (ecoBalance != sqlBalance) {
-			double difference = sqlBalance - ecoBalance;
-			economy.depositPlayer(offlinePlayer, difference);
+			final double difference = sqlBalance - ecoBalance;
+			getServer().getScheduler().scheduleAsyncDelayedTask(this, new Runnable() {
+				public void run() {
+					economy.depositPlayer(offlinePlayer, difference);
+				}
+			});
 		}
 	}
 }
