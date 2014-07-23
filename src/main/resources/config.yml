@@ -1,0 +1,6 @@
+db_host: localhost
+db_port: 3306
+db_database: Minecraft
+db_user: root
+db_pass: 12345
+db_prefix: ''
