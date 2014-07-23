@@ -27,6 +27,7 @@ public class Main extends JavaPlugin implements Listener {
 		setupEconomy();
 		config = new Config(this);
 		sql = new SQL(config);
+		getServer().getPluginManager().registerEvents(this, this);
 	}
 
 	public void onDisable() {
