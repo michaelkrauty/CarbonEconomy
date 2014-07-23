@@ -25,6 +25,8 @@ public class Main extends JavaPlugin implements Listener {
 		setupEconomy();
 		config = new Config(this);
 		sql = new SQL(config);
+		if (!getDataFolder().exists())
+			getDataFolder().mkdir();
 	}
 
 	public void onDisable() {
