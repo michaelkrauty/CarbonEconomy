@@ -1,0 +1,5 @@
+name: CarbonEconomy
+version: 1.0
+author: michaelkrauty
+main: me.michaelkrauty.CarbonEconomy.Main
+depend: [Vault]
